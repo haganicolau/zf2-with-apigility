@@ -9,6 +9,7 @@
 
 namespace Application\Service;
 
+/*Dependências*/
 use Zend\Http\Request;
 use Zend\Http\Client;
 
@@ -20,8 +21,25 @@ class ResourcesApi {
      */
     private static $urlApi = "http://api.zf2.com/certificate";
 
+    /** 
+    * atributo para setar os dados a serem enviados por parâmetros 
+    * @access private 
+    * @name $params 
+    */ 
     private $params = null;
+
+    /** 
+    * atributo para setar os dados a serem enviados no body 
+    * @access private 
+    * @name $body
+    */ 
     private $body = null;
+
+    /** 
+    * Mudar o envio dos dados no getResponse, para isto eu seto que será uma requisição do tipo put 
+    * @access private 
+    * @name $params 
+    */ 
     private $is_put = false;
 
     /**
@@ -83,13 +101,13 @@ class ResourcesApi {
     }
 
     /**
-     * 
+     * Método responsável por efetuar as requisições depois de configuradas
      * @param int $method
      * @return array
      */
     private function getResponse($method) {
 
-        $client = new Client(self::$urlApi);
+        $client=null;
  
         if ($this->params) {
             $uri = self::$urlApi . '/' . $this->params;
@@ -97,26 +115,26 @@ class ResourcesApi {
             $this->params = false;
         }
 
-        if ($this->body) {
-            $client->setEncType(Client::ENC_FORMDATA);
-            $client->setParameterPost($this->body);
-            $this->body = false;
+        if(!$client){
+            $client = new Client(self::$urlApi);
         }
-
-        $response = '';
 
         if($this->is_put){
-            $client->setEncType(Client::ENC_FORMDATA);
-
-            $response = $client->setMethod($method)
-                ->setHeaders(['Content-Type' => 'application/json'])
-                ->send();
+           $client->setRawBody(json_encode($this->body));
+           $client->setHeaders(['Content-Type' => 'application/json']);
         }
         else{
-            $response = $client->setMethod($method)
-                ->setHeaders(['Accept' => 'application/json'])
-                ->send();
+            if ($this->body) {
+                $client->setEncType(Client::ENC_FORMDATA);
+                $client->setParameterPost($this->body);
+                $this->body = false;
+            }
+            $client->setHeaders(['Accept' => 'application/json']);
         }
+
+
+        $response = $client->setMethod($method)    
+            ->send();
 
         if ($response->isSuccess()) {
             return $response->getContent() ?: TRUE;

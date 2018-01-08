@@ -145,7 +145,7 @@ jQuery(document).ready(function(){
 		      url: 	route,
 		      dataType: 'json',
 		    }).done(function(data) {
-		    	console.log(data);
+
 		      	if(data.status == 'ok'){
 
 		      		swal({
@@ -156,7 +156,7 @@ jQuery(document).ready(function(){
 
 						jQuery("#element-"+id).remove();
 
-						jQuery("tbody").append('<tr> <td colspan="3" class="text-center">Nenhum certificado encontrado</td> </tr>');
+						//jQuery("tbody").append('<tr> <td colspan="3" class="text-center">Nenhum certificado encontrado</td> </tr>');
 
 						jQuery('#mdlDelete').modal('toggle');
 						
@@ -184,6 +184,7 @@ jQuery(document).ready(function(){
 	});
 
 	jQuery('.btn-update').click(function(event) {
+		console.log('update');
 		event.preventDefault();
 
 		var route = jQuery(this).attr("href");
@@ -218,8 +219,16 @@ jQuery(document).ready(function(){
 			      data: {'name': name,'file': data},
 			      contentType: "application/x-www-form-urlencoded;charset=UTF-8"
 			    }).done(function(data) {
+			    	data = data.response;
+			      	swal({
+					  	title: 'Yeah!',
+					  	text: data.message,
+					  	type: 'success'
+					}).then(function() {
 
-			      	
+						location.reload();
+						
+					}).catch(swal.noop);
 		 
 			    }).fail(function(data) {
 			      

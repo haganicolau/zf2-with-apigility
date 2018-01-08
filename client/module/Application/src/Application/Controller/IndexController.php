@@ -22,7 +22,7 @@ use Zend\View\Model\JsonModel;
 class IndexController extends AbstractActionController {
 
     /** 
-    * método para usar os recursos da api. 
+    * Objeto para usar os recursos da api. 
     * @access private 
     * @name $resources 
     */ 
@@ -212,20 +212,13 @@ class IndexController extends AbstractActionController {
 
         $response = [];
 
-        if ($this->resources->put($cert)) {
+        $this->resources->put($cert);
 
-            $response = [
-                'status' => 'ok',
-                'message' => 'Certificado alterado com sucesso.'
-            ];
-
-        } else {
-            $response = [
-                'status' => 'ok',
-                'message' => 'Erro ao alterar certificado. Tente novamente.'
-            ];
-        }
-
+        $response = [
+            'status' => 'ok',
+            'message' => 'Certificado alterado com sucesso.'
+        ];
+        
         $response = new JsonModel(array(
             'response' => $response,
         ));
