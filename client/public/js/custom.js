@@ -3,10 +3,21 @@
  * Copyright 2018 haganicolau.
  */
 
-jQuery(document).ready(function(){
+jQuery(document).ready(function()
+{
+
+	if(jQuery('.fail').length)
+	{
+		swal({
+		  	title: 'Ops...',
+		  	text: 'Acesso não autorizado!',
+		  	type: 'error'
+		});
+	}
 	
 	/*submit para salvar o certificado*/
-	jQuery('#upload-form').submit(function(event) {
+	jQuery('#upload-form').submit(function(event) 
+	{
 	    event.preventDefault();
 
 	    var frm = jQuery(this);
@@ -66,8 +77,8 @@ jQuery(document).ready(function(){
 	});
 
 	/*click para visualizar dados do certificado*/
-	jQuery('.btn-view').click(function(event) {
-
+	jQuery('.btn-view').click(function(event) 
+	{
 		event.preventDefault();
 		var route = jQuery(this).attr("href");
 
@@ -80,7 +91,7 @@ jQuery(document).ready(function(){
 	    }).done(function(data) {
 
 	    	if(data.status == 'ok'){
-
+	    		/*monta a exibicão dos dados do certificado*/
 				jQuery(".subject-dn").append('<b>Subject DN:</b> <em> '+data.data.subjectDn+' </em>');
 	    		jQuery(".issuer-dn").append('<b>Issuer DN:</b> <em> '+data.data.issuerDn+' </em>');
 	    		jQuery(".note-before").append('<b>Não antes de:</b> <em> '+data.data.notBefore+' </em>');
@@ -91,6 +102,7 @@ jQuery(document).ready(function(){
 			        show: 'true'
 			    });
 
+	    		/*ao fechar o modal todos os dados são zerados*/
 			    jQuery('#mdlView').on('hide.bs.modal', function (event) {
 					jQuery(".subject-dn b").remove();
 			    	jQuery(".subject-dn em").remove();
@@ -128,7 +140,8 @@ jQuery(document).ready(function(){
 	});
 
 	/*click para excluir certificado*/
-	jQuery('.btn-delete').click(function(event) {
+	jQuery('.btn-delete').click(function(event)
+	{
 		event.preventDefault();
 		var route = jQuery(this).attr("href");
 		certificate = this;
@@ -156,8 +169,6 @@ jQuery(document).ready(function(){
 
 						jQuery("#element-"+id).remove();
 
-						//jQuery("tbody").append('<tr> <td colspan="3" class="text-center">Nenhum certificado encontrado</td> </tr>');
-
 						jQuery('#mdlDelete').modal('toggle');
 						
 					}).catch(swal.noop);
@@ -183,6 +194,7 @@ jQuery(document).ready(function(){
 	    });
 	});
 
+	/*ação para alterar certificado*/
 	jQuery('.btn-update').click(function(event) {
 		console.log('update');
 		event.preventDefault();

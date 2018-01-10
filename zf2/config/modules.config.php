@@ -29,5 +29,5 @@ return [
     'DoctrineModule',
     'DoctrineORMModule',
     'Application',
-    'Certificate',
+    'Certificate'
 ];

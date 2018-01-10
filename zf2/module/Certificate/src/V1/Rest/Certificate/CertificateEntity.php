@@ -1,4 +1,11 @@
 <?php
+/**
+ * Classe entidade que vai interagir com o banco por meio do orm doctrine
+ * @author Hagamenon <haganicolau@gmail.com>
+ * @version 0.1 
+ * @package Certificate\V1\Rest\Certificate 
+ */
+
 namespace Certificate\V1\Rest\Certificate;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -34,7 +41,8 @@ class CertificateEntity
      * 
      * @return int
      */
-    public function getId() {
+    public function getId() 
+    {
         return $this->id;
     }
 
@@ -42,7 +50,8 @@ class CertificateEntity
      * 
      * @return string
      */
-    public function getName() {
+    public function getName() 
+    {
         return $this->name;
     }
 
@@ -51,7 +60,8 @@ class CertificateEntity
      * @param string $name
      * @return \Certificate\V1\Rest\Certificate\CertificateEntity
      */
-    public function setName($name) {
+    public function setName($name) 
+    {
         $this->name = $name;
         return $this;
     }
@@ -60,7 +70,8 @@ class CertificateEntity
      * 
      * @return string
      */
-    public function getCertificate() {
+    public function getCertificate() 
+    {
         return $this->certificate;
     }
 
@@ -69,7 +80,8 @@ class CertificateEntity
      * @param string $certificate
      * @return \Certificate\V1\Rest\Certificate\CertificateEntity
      */
-    public function setCertificate($certificate) {
+    public function setCertificate($certificate) 
+    {
         $this->certificate = $certificate;
         return $this;
     }

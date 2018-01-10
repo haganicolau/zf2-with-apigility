@@ -7,10 +7,19 @@
         "zf2"
     ],
     "homepage": "http://framework.zend.com/",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/reinaldoborges/rb-sphinx-hmac.git"
+        }
+    ],
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "~2.4.11",
-        "phpseclib/phpseclib": "~2.0"
+        "phpseclib/phpseclib": "~2.0",
+        "rb/sphinx-hmac": "dev-develop"
     },
     "config": {
         "process-timeout": 5000

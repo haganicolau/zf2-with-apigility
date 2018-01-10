@@ -8,4 +8,5 @@ $baseDir = dirname($vendorDir);
 return array(
     'phpseclib\\' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
     'Zend\\' => array($vendorDir . '/zendframework/zendframework/library/Zend'),
+    'RB\\Sphinx\\Hmac\\' => array($vendorDir . '/rb/sphinx-hmac/src'),
 );

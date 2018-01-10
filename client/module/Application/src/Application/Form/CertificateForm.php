@@ -14,15 +14,17 @@ use Zend\InputFilter;
 use Zend\Form\Element;
 use Zend\Form\ZendX_JQuery_Form;
 
-class CertificateForm extends Form {
+class CertificateForm extends Form 
+{
 
     /**
      * 
-     * @param $name
-     * @param $array
+     * @param String $name
+     * @param $array $options
      * @return void
      */
-    public function __construct($name = null, $options = array()) {
+    public function __construct($name = null, $options = array()) 
+    {
         parent::__construct($name, $options);
 
         $this->addElements();
@@ -33,7 +35,8 @@ class CertificateForm extends Form {
      * 
      * @return void
      */
-    public function addElements() {
+    public function addElements() 
+    {
         $nome = new Element\Text('name');
         $nome->setAttribute('class', 'form-control')
                 ->setLabel('Nome')
@@ -54,7 +57,8 @@ class CertificateForm extends Form {
      * 
      * @return void
      */
-    public function addInputFilter() {
+    public function addInputFilter() 
+    {
         $inputFilter = new InputFilter\InputFilter();
 
         $nomeInput = new InputFilter\Input('name');

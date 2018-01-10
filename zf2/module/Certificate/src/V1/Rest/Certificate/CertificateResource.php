@@ -1,8 +1,16 @@
 <?php
+/**
+ * Classe que é implementado os recursos da api
+ * @author Hagamenon <haganicolau@gmail.com>
+ * @version 0.1 
+ * @package Certificate\V1\Rest\Certificate 
+ */
+
 namespace Certificate\V1\Rest\Certificate;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use Zend\Http\Headers;
 
 class CertificateResource extends AbstractResourceListener
 {
@@ -12,19 +20,46 @@ class CertificateResource extends AbstractResourceListener
     */
     private $services;
 
-    public function __construct($services){
+    /**
+    *@var String
+    */
+    private $autorization;
+
+    /**
+    *@var String
+    */
+    private $hmac;
+
+    /**
+     * Constructor recebe a depenência do doctrine
+     *
+     * @param \Doctrine\ORM\EntityManager
+     * @return void
+     */
+    public function __construct($services)
+    {
         $this->services = $services;
+        $headers = getallheaders();
+        $this->autorization = $headers['Authorization'];
+
+        $this->hmac = new HmacService($this->autorization);
+        $this->hmac->init();
+        
     }
 
     /**
-     * Create a resource
+     * método que cria novo certificado
      *
-     * @param  mixed $data
-     * @return Certificate\V1\Rest\Certificate\
+     * @param  Certificate\V1\Rest\Certificate\CertificateEntity $data
+     * @return Certificate\V1\Rest\Certificate\CertificateEntity
      */
     public function create($data)
     {
- 
+
+        if(!$this->hmac->validate()){
+            return new ApiProblem(403, 'Execute access forbidden');
+        }
+
         if(!isset($data->name)){
             return new ApiProblem(400, 'Name is required!');
         }
@@ -41,13 +76,17 @@ class CertificateResource extends AbstractResourceListener
     }
 
     /**
-     * Delete a resource
+     * Delete o certificado
      *
-     * @param  mixed $id
-     * @return ApiProblem|mixed
+     * @param  int $id
+     * @return Certificate\V1\Rest\Certificate\CertificateEntity | boolean:false
      */
     public function delete($id)
     {
+        if(!$this->hmac->validate()){
+            return new ApiProblem(403, 'Execute access forbidden');
+        }
+
         $certificate = $this->services->find(CertificateEntity::class, $id);
 
         if (!$certificate) {
@@ -72,13 +111,17 @@ class CertificateResource extends AbstractResourceListener
     }
 
     /**
-     * Fetch a resource
+     * Busca um certificado pelo id
      *
      * @param  int $id
      * @return Certificate\V1\Rest\Certificate\CertificateEntity
      */
     public function fetch($id)
     {
+        if(!$this->hmac->validate()){
+            return new ApiProblem(403, 'Execute access forbidden');
+        }
+
         $certificate = $this->services->find(CertificateEntity::class, $id);
         return $certificate;
     }
@@ -91,14 +134,17 @@ class CertificateResource extends AbstractResourceListener
      */
     public function fetchAll($params = [])
     {
+        if(!$this->hmac->validate()){
+            return new ApiProblem(403, 'Execute access forbidden');
+        }
 
         $list = new CertificateCollection(
             $this->services->getRepository(
                 CertificateEntity::class
                 )->findAll()
             );
-
         return $list;
+
     }
 
     /**
@@ -136,13 +182,18 @@ class CertificateResource extends AbstractResourceListener
     }
 
     /**
-     * Update a resource
+     * Altera o certificado pedido
      *
-     * @param  mixed $id
-     * @param  mixed $data
+     * @param  int $id
+     * @param  Certificate\V1\Rest\Certificate\CertificateEntity $data
      * @return ApiProblem|mixed
      */
-    public function update($id, $data) {
+    public function update($id, $data) 
+    {
+
+        if(!$this->hmac->validate()){
+            return new ApiProblem(403, 'Execute access forbidden');
+        }
 
         if(!isset($data->name)){
             return new ApiProblem(400, 'Name is required!');

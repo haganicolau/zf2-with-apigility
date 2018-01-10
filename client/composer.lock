@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "209209566714a0cedd2f0da5be6b5ea1",
+    "content-hash": "bde6d82781d9110aee5e53ff32278eb4",
     "packages": [
         {
             "name": "phpseclib/phpseclib",
@@ -97,6 +97,48 @@
                 "x509"
             ],
             "time": "2017-11-29T06:38:08+00:00"
+        },
+        {
+            "name": "rb/sphinx-hmac",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reinaldoborges/rb-sphinx-hmac.git",
+                "reference": "19a4bcdb7f23f5fb52d172106c20e4e88d439a74"
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1-dev",
+                    "dev-develop": "0.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RB\\Sphinx\\Hmac\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "ZendTest\\Http\\": "test/"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "PHP Hash-based Message Authentication Code (HMAC)",
+            "homepage": "https://github.com/reinaldoborges/rb-sphinx-hmac",
+            "keywords": [
+                "hmac",
+                "rb"
+            ],
+            "time": "2016-05-06 20:40:12"
         },
         {
             "name": "zendframework/zendframework",
@@ -263,9 +305,11 @@
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
-    "prefer-stable": false,
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "rb/sphinx-hmac": 20
+    },
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": ">=5.3.3"

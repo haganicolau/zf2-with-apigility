@@ -19,6 +19,10 @@ class ComposerStaticInite8c226d0be23c5c2b50b254192bf64c5
         array (
             'Zend\\' => 5,
         ),
+        'R' => 
+        array (
+            'RB\\Sphinx\\Hmac\\' => 15,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -29,6 +33,10 @@ class ComposerStaticInite8c226d0be23c5c2b50b254192bf64c5
         'Zend\\' => 
         array (
             0 => __DIR__ . '/..' . '/zendframework/zendframework/library/Zend',
+        ),
+        'RB\\Sphinx\\Hmac\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/rb/sphinx-hmac/src',
         ),
     );
 

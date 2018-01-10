@@ -57,17 +57,19 @@ class IndexController extends AbstractActionController {
     public function indexAction() {
         $message = '';
         $header = '';
+        $fail = null;
+
         $list_certificates = $this->resources->getCertificates();
 
         if (!$list_certificates) {
-           $this->flashMessenger()->addErrorMessage("Erro ao consultar Certificados.");
+            $fail = "Acesso não autorizado";
         }
 
         $list_certificates = json_decode($list_certificates);
 
         $form = new CertificateForm('upload-form');
 
-        return new ViewModel(compact('message', 'header', 'list_certificates', 'form'));
+        return new ViewModel(compact('message', 'header', 'list_certificates', 'form', 'fail'));
     }
 
     /** 

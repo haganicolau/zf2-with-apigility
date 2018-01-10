@@ -7,6 +7,7 @@
     <div class="panel-heading text-center" >
         <h3 class="panel-title" >Certificados</h3>
     </div>
+    <?php if(isset($fail)){echo '<div class="fail"></div>';} ;?>
     <div class="panel-body text-center">
         <table class="table row" style="display:inline-table;">
             <tr>
@@ -14,6 +15,7 @@
                 <th class="text-center col-md-4" >Nome</th>
                 <th class="text-center col-md-4" >Operação</th>
             </tr>
+            
             <?php if (!empty($list_certificates->_embedded->certificate)) : ?>
                 <?php foreach ($list_certificates->_embedded->certificate as $certificate): ?>
                     <tr id="element-<?=$certificate->id?>">

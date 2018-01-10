@@ -12,6 +12,7 @@ namespace Application\Service;
 /*Dependências*/
 use Zend\Http\Request;
 use Zend\Http\Client;
+use Application\Service\HmacClient;
 
 class ResourcesApi {
 
@@ -41,6 +42,24 @@ class ResourcesApi {
     * @name $params 
     */ 
     private $is_put = false;
+
+    /** 
+    * Responsável por gerar autenticação com o servidor, garantindo que a requição é válida 
+    * @access private 
+    * @name $hmac 
+    */ 
+    private $token;
+
+    /** 
+    * Construtor inicializando classe para fazer uso da api
+    * @access public 
+    * @return void 
+    */ 
+    public function __construct() {
+        $hmac = new HmacClient();
+        $hmac->init();
+        $this->token = $hmac->generateHmac();
+    }
 
     /**
      * 
@@ -108,6 +127,7 @@ class ResourcesApi {
     private function getResponse($method) {
 
         $client=null;
+        $header = [];
  
         if ($this->params) {
             $uri = self::$urlApi . '/' . $this->params;
@@ -120,8 +140,11 @@ class ResourcesApi {
         }
 
         if($this->is_put){
-           $client->setRawBody(json_encode($this->body));
-           $client->setHeaders(['Content-Type' => 'application/json']);
+            $client->setRawBody(json_encode($this->body));
+            $header = [
+                'Content-Type' => 'application/json',
+                'Authorization' => $this->token
+            ];
         }
         else{
             if ($this->body) {
@@ -129,10 +152,15 @@ class ResourcesApi {
                 $client->setParameterPost($this->body);
                 $this->body = false;
             }
-            $client->setHeaders(['Accept' => 'application/json']);
+            
+            $header = [
+                'Accept' => 'application/json',
+                'Authorization' => $this->token
+            ];
+
         }
 
-
+        $client->setHeaders($header);
         $response = $client->setMethod($method)    
             ->send();
 

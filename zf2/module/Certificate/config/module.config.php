@@ -2,7 +2,7 @@
 return [
     'service_manager' => [
         'factories' => [
-            \Certificate\V1\Rest\Certificate\CertificateResource::class => \Certificate\V1\Rest\Certificate\CertificateResourceFactory::class,
+            \Certificate\V1\Rest\Certificate\CertificateResource::class => \Certificate\V1\Rest\Certificate\CertificateResourceFactory::class
         ],
     ],
     'router' => [
