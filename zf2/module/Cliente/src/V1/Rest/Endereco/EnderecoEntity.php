@@ -60,10 +60,22 @@ class EnderecoEntity
     private $complemento;
 
     /**
-     * @ManyToOne(targetEntity="\Cliente\V1\Rest\Cliente\ClienteEntity", inversedBy="endereco")
+     * @ManyToOne(targetEntity="\Cliente\V1\Rest\Cliente\ClienteEntity", inversedBy="endereco", cascade={"all"})
      * @JoinColumn(name="id_cliente", referencedColumnName="id")
      */
     private $cliente;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $cidade;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $uf;
 
     public function __construct()
     {
@@ -89,26 +101,26 @@ class EnderecoEntity
     /**
      * @param mixed $logradouro
      */
-    public function setLogradouro($logradouro)
+    public function setLogradouro($logradouro = "")
     {
         $this->logradouro = $logradouro;
     }
 
-//    /**
-//     * @return CidadeEntity
-//     */
-//    public function getCidade()
-//    {
-//        return $this->cidade;
-//    }
-//
-//    /**
-//     * @param CidadeEntity $cidade
-//     */
-//    public function setCidade(CidadeEntity $cidade)
-//    {
-//        $this->cidade = $cidade;
-//    }
+    /**
+     * @return string
+     */
+    public function getCidade()
+    {
+        return $this->cidade;
+    }
+
+    /**
+     * @param string $cidade
+     */
+    public function setCidade($cidade = "")
+    {
+        $this->cidade = $cidade;
+    }
 
     /**
      * @return mixed
@@ -121,7 +133,7 @@ class EnderecoEntity
     /**
      * @param mixed $numero
      */
-    public function setNumero($numero)
+    public function setNumero($numero = "")
     {
         $this->numero = $numero;
     }
@@ -137,7 +149,7 @@ class EnderecoEntity
     /**
      * @param mixed $cep
      */
-    public function setCep($cep)
+    public function setCep($cep = "")
     {
         $this->cep = $cep;
     }
@@ -153,7 +165,7 @@ class EnderecoEntity
     /**
      * @param mixed $bairro
      */
-    public function setBairro($bairro)
+    public function setBairro($bairro = "")
     {
         $this->bairro = $bairro;
     }
@@ -169,9 +181,40 @@ class EnderecoEntity
     /**
      * @param mixed $complemento
      */
-    public function setComplemento($complemento)
+    public function setComplemento($complemento = "")
     {
         $this->complemento = $complemento;
     }
 
+    /**
+     * @return string
+     */
+    public function getUf()
+    {
+        return $this->uf;
+    }
+
+    /**
+     * @param string $uf
+     */
+    public function setUf($uf = "")
+    {
+        $this->uf = $uf;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCliente()
+    {
+        return $this->cliente;
+    }
+
+    /**
+     * @param mixed $cliente
+     */
+    public function setCliente($cliente)
+    {
+        $this->cliente = $cliente;
+    }
 }

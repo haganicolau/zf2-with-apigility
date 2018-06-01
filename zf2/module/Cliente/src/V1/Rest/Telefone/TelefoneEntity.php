@@ -41,14 +41,14 @@ class TelefoneEntity
     private $numero;
 
     /**
-     * @ManyToOne(targetEntity="\Cliente\V1\Rest\Cliente\ClienteEntity", inversedBy="telefones")
+     * @ManyToOne(targetEntity="\Cliente\V1\Rest\Cliente\ClienteEntity", inversedBy="telefones", cascade={"all"})
      * @JoinColumn(name="id_cliente", referencedColumnName="id")
      */
     private $cliente;
 
-    public function __construct($numero, EnumTelefone $tipo)
+    public function __construct($numero, $tipo)
     {
-        $this->tipo = $tipo;
+        $this->tipo = EnumTelefone::getName($tipo);
         $this->numero = $numero;
     }
 
@@ -83,5 +83,4 @@ class TelefoneEntity
     {
         $this->cliente = $cliente;
     }
-
 }
