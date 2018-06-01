@@ -32,6 +32,7 @@ class ArrayAdapter implements AdapterInterface
      */
     public function __construct(array $array = array())
     {
+        var_dump($array);exit();
         $this->array = $array;
         $this->count = count($array);
     }

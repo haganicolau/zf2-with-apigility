@@ -15,10 +15,9 @@ class CertificateCollection extends Paginator
 {
 	/**
      * Construtor
-     * @param type $certificateCollection
+     * @param $certificateCollection
      */
     public function __construct($certificateCollection) {
-
        parent::__construct(new ArrayAdapter($certificateCollection));
     }    
 }

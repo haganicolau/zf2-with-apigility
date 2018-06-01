@@ -2,7 +2,7 @@
 return [
     'service_manager' => [
         'factories' => [
-            \Certificate\V1\Rest\Certificate\CertificateResource::class => \Certificate\V1\Rest\Certificate\CertificateResourceFactory::class
+            \Certificate\V1\Rest\Certificate\CertificateResource::class => \Certificate\V1\Rest\Certificate\CertificateResourceFactory::class,
         ],
     ],
     'router' => [
@@ -79,22 +79,6 @@ return [
                 'route_name' => 'certificate.rest.certificate',
                 'route_identifier_name' => 'certificate_id',
                 'is_collection' => true,
-            ],
-        ],
-    ],
-    'doctrine' => [
-        'driver' => [
-            'certificado_entities' => [
-                'class' => \Doctrine\ORM\Mapping\Driver\AnnotationDriver::class,
-                'cache' => 'array',
-                'paths' => [
-                    0 => 'var\\www\\soluti\\zf2\\module\\Certificate\\config/../src/V1/Rest/Certificate',
-                ],
-            ],
-            'orm_default' => [
-                'drivers' => [
-                    'Certificate\\V1\\Rest\\Certificate' => 'certificado_entities',
-                ],
             ],
         ],
     ],
