@@ -21,8 +21,8 @@ class TelefoneEntity
      * @var integer Identificador único do registro.
      *
      * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="integer")
      */
     private $id;
 
@@ -41,7 +41,7 @@ class TelefoneEntity
     private $numero;
 
     /**
-     * @ManyToOne(targetEntity="\Cliente\V1\Rest\Cliente\ClienteEntity", inversedBy="telefones", cascade={"all"})
+     * @ManyToOne(targetEntity="\Cliente\V1\Rest\Cliente\ClienteEntity", inversedBy="telefones", cascade={"persist"})
      * @JoinColumn(name="id_cliente", referencedColumnName="id")
      */
     private $cliente;
@@ -68,6 +68,11 @@ class TelefoneEntity
         return $this->id;
     }
 
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     /**
      * @return mixed
      */
@@ -82,5 +87,11 @@ class TelefoneEntity
     public function setCliente($cliente)
     {
         $this->cliente = $cliente;
+    }
+
+    public function compare($old, $new){
+        if(isset($new['id'])){
+
+        }
     }
 }

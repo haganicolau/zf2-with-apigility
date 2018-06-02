@@ -22,8 +22,8 @@ class ClienteEntity
      * @var integer Identificador único do registro.
      *
      * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="integer")
      */
     private $id;
 
@@ -43,13 +43,13 @@ class ClienteEntity
 
     /**
      * @var TelefoneEntity referencia entidade telefones
-     * @ORM\OneToMany(targetEntity="\Cliente\V1\Rest\Telefone\TelefoneEntity", mappedBy="cliente", fetch="EAGER", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="\Cliente\V1\Rest\Telefone\TelefoneEntity", mappedBy="cliente", fetch="EAGER", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $telefones;
 
     /**
      * @var EnderecoEntity referencia entidade endereço
-     * @OneToMany(targetEntity="\Cliente\V1\Rest\Endereco\EnderecoEntity", mappedBy="cliente", fetch="EAGER", cascade={"all"})
+     * @OneToMany(targetEntity="\Cliente\V1\Rest\Endereco\EnderecoEntity", mappedBy="cliente", fetch="EAGER", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $endereco;
 

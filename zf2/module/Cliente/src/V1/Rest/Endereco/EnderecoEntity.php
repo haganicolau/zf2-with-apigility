@@ -24,8 +24,8 @@ class EnderecoEntity
      * @var integer Identificador único do registro.
      *
      * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="integer")
      */
     private $id;
 
@@ -60,7 +60,7 @@ class EnderecoEntity
     private $complemento;
 
     /**
-     * @ManyToOne(targetEntity="\Cliente\V1\Rest\Cliente\ClienteEntity", inversedBy="endereco", cascade={"all"})
+     * @ManyToOne(targetEntity="\Cliente\V1\Rest\Cliente\ClienteEntity", inversedBy="endereco", cascade={"persist"})
      * @JoinColumn(name="id_cliente", referencedColumnName="id")
      */
     private $cliente;
@@ -77,17 +77,17 @@ class EnderecoEntity
      */
     private $uf;
 
-    public function __construct()
-    {
-
-    }
-
     /**
      * @return int
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**

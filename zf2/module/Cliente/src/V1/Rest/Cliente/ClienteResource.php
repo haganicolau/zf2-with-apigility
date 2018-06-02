@@ -68,7 +68,14 @@ class ClienteResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        $clienteDB = $this->services->find(ClienteEntity::class, $id);
+        if(empty($clienteDB)){
+            return new ApiProblem(404, 'Cliente não encontrado');
+        }
+
+        $this->services->remove($clienteDB);
+        $this->services->flush();
+        return new ApiProblem(200, 'Deletado com sucesso');
     }
 
     /**
@@ -90,7 +97,15 @@ class ClienteResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        $clienteDB = $this->services->find(ClienteEntity::class, $id);
+        if(empty($clienteDB)){
+            return new ApiProblem(404, 'Cliente não encontrado');
+        }
+
+        $to = new ClienteTO();
+        $response = $to->convertDbToDTO($clienteDB);
+
+        return $response;
     }
 
     /**
@@ -158,7 +173,37 @@ class ClienteResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+        $retorno = self::validateFields($data);
+        $to = new ClienteTO();
+
+        if($retorno['code'] != 200) {
+            return new ApiProblem($retorno['code'], $retorno['mensagem']);
+        }
+
+        $oldDB = $this->services->find(ClienteEntity::class, $id);
+        $oldDB->setNome($data->nome);
+        $oldDB->setCpf($data->cpf);
+        $oldDB->setEmail($data->email);
+
+        if(isset($data->telefones)) {
+            foreach($oldDB->getTelefones() as $item) {
+                $this->services->remove($item);
+            }
+            $oldDB->setTelefones($to->setTelefonesDB($data->telefones, $oldDB));
+        }
+
+        if(isset($data->endereco)) {
+            $this->services->remove( $oldDB->getEndereco()[0]);
+            $oldDB->setEndereco($to->setEnderecoDB($data->endereco, $oldDB));
+        }
+
+        try{
+            $this->services->persist($oldDB);
+            $this->services->flush();
+
+        } catch(Exception $ex) {
+            return new ApiProblem(500, $ex->getMessage());
+        }
     }
 
     /**

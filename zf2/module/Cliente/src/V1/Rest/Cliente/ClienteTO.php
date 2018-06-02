@@ -18,11 +18,12 @@ class ClienteTO implements To
     public function convertDbToDTO($clienteDB = null)
     {
         $dto = [
-            'id' => $clienteDB->getId(),
-            'nome' => $clienteDB->getNome(),
-            'cpf' => $clienteDB->getCpf(),
+            'id'        => $clienteDB->getId(),
+            'nome'      => $clienteDB->getNome(),
+            'cpf'       => $clienteDB->getCpf(),
             'telefones' => self::setTelefonesTO($clienteDB->getTelefones()),
-            'endereco' => self::setEnderecoTO($clienteDB->getEndereco()),
+            'endereco'  => self::setEnderecoTO($clienteDB->getEndereco()),
+            'email'     => $clienteDB->getEmail()
         ];
         return $dto;
     }
@@ -94,6 +95,11 @@ class ClienteTO implements To
     public function setEnderecoDB($endereco = array(), $cliente = null)
     {
         $end = new EnderecoEntity();
+
+        if(isset($endereco['id'])) {
+            $end->setId($endereco['id']);
+        }
+
         $end->setBairro($endereco['bairro']);
         $end->setLogradouro($endereco['logradouro']);
         $end->setNumero($endereco['numero']);
